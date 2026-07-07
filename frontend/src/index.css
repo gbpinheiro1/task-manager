@@ -1,1 +1,5 @@
 @import "tailwindcss";
+
+@theme {
+  --breakpoint-lgscreen: 120rem; /* 1920px */
+}
