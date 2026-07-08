@@ -19,7 +19,7 @@ function TaskFilter({ value, onChange }: TaskFilterProps) {
           key={option.value}
           type="button"
           onClick={() => onChange(option.value)}
-          className={`rounded-full border px-4 py-1.5 text-sm font-medium transition-colors ${
+          className={`rounded-full border px-4 py-1.5 text-sm lgscreen:text-lg font-medium transition-colors ${
             value === option.value
               ? "border-white bg-white text-black"
               : "border-gray-700 bg-transparent text-gray-400 hover:border-gray-500 hover:text-white"
