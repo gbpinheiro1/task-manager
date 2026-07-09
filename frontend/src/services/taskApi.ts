@@ -34,9 +34,9 @@ export function createTask(data: {
 }
 
 export function toggleTaskStatus(id: string): Promise<Task> {
-  return request<Task>(`/tasks/${id}/toggle`, { method: "PATCH" })
+  return request<Task>(`/tasks/${id}/toggle`, { method: "PATCH", body: JSON.stringify({}) })
 }
 
 export function deleteTask(id: string): Promise<void> {
-  return request<void>(`/tasks/${id}`, { method: "DELETE" })
+  return request<void>(`/tasks/${id}`, { method: "DELETE", body: JSON.stringify({}) })
 }

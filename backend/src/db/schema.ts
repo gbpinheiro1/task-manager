@@ -8,4 +8,5 @@ export const tasks = pgTable("tasks", {
   description: text("description").notNull().default(""),
   status: taskStatusEnum("status").notNull().default("pending"),
   createdAt: timestamp("created_at", { withTimezone: true }).notNull().defaultNow(),
+  updatedAt: timestamp("updated_at", { withTimezone: true }).notNull().defaultNow(),
 })

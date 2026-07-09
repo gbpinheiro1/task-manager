@@ -27,17 +27,20 @@ describe("TaskService", () => {
 
   describe("toggleStatus", () => {
     it("should toggle task status from pending to completed", async () => {
+      const now = new Date()
       const mockTask: Task = {
         id: "task-1",
         title: "Test Task",
         description: "A test task",
         status: "pending",
-        createdAt: new Date(),
+        createdAt: now,
+        updatedAt: now,
       }
 
       const updatedTask: Task = {
         ...mockTask,
         status: "completed",
+        updatedAt: new Date(),
       }
 
       vi.mocked(mockRepository.findById).mockResolvedValue(mockTask)
@@ -60,11 +63,13 @@ describe("TaskService", () => {
         description: "A brand new task",
       }
 
+      const now = new Date()
       const createdTask: Task = {
         id: "task-2",
         ...newTaskData,
         status: "pending" as const,
-        createdAt: new Date(),
+        createdAt: now,
+        updatedAt: now,
       }
 
       vi.mocked(mockRepository.create).mockResolvedValue(createdTask)
