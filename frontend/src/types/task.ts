@@ -5,7 +5,7 @@ export interface Task {
   title: string
   description: string
   status: TaskStatus
-  createdAt: number //Data de criação
+  createdAt: string //Data de criação (ISO 8601)
 }
 
 export type TaskFilterValue = "all" | TaskStatus
