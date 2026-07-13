@@ -36,38 +36,36 @@
 
 - Frontend (GitHub Pages) envia requisições HTTP/HTTPS para o backend em Render
 - Backend valida, processa e persiste dados no PostgreSQL Neon
-- Respostas voltam ao frontend com status HTTP apropriado
-- CORS configurado para aceitar requisições do domínio GitHub Pages
-
+- 
 ---
 
 2. Tecnologias Utilizadas
 
 ### Frontend
 
-- **React 18** - UI framework com Hooks
-- **TypeScript** - Type safety em tempo de desenvolvimento
-- **Tailwind CSS** - Utility-first CSS framework
-- **Vite 6** - Build tool rápido com HMR
+- **React** 
+- **TypeScript** 
+- **Tailwind CSS** 
+- **Vite**
 - **Axios** - HTTP client para requisições
 
 ### Backend
 
 - **Fastify** - Web framework leve e rápido
-- **TypeScript** - Type safety e melhor DX
-- **Drizzle ORM** - ORM type-safe com migrations automáticas
-- **PostgreSQL** - Banco relacional
-- **Zod** - Validação de schemas em runtime
+- **TypeScript**
+- **Drizzle ORM**
+- **PostgreSQL**
+- **Zod** - Validação de schemas e APIs em runtime
 
 ### Banco de Dados
 
-- **Neon** - PostgreSQL serverless com auto-scaling
-- **Drizzle Kit** - Ferramentas para migrations
+- **Neon** - PostgreSQL
+- **Drizzle**
 
 ### Testes
 
-- **Vitest** - Unit testing framework leve (alternativa ao Jest)
-- **@vitest/ui** - Interface visual para testes
+- **Vitest**
+
 
 ### Deployment
 
