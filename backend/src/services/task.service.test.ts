@@ -2,6 +2,7 @@ import { describe, it, expect, vi } from "vitest"
 import { TaskService, TaskNotFoundError } from "./task.service.js"
 import type { TaskRepository } from "../repositories/task.repository.js"
 import type { Task } from "../models/task.model.js"
+import type { GeminiClassifierService } from "./gemini.service.js"
 
 describe("TaskService", () => {
   const mockRepository = {
@@ -12,7 +13,11 @@ describe("TaskService", () => {
     delete: vi.fn(),
   } as unknown as TaskRepository
 
-  const taskService = new TaskService(mockRepository)
+  const mockClassifier = {
+    classify: vi.fn().mockResolvedValue({ category: "TI", priority: "Média" }),
+  } as unknown as GeminiClassifierService
+
+  const taskService = new TaskService(mockRepository, mockClassifier)
 
   describe("getTaskById", () => {
     it("should throw TaskNotFoundError when task does not exist", async () => {
@@ -33,6 +38,8 @@ describe("TaskService", () => {
         title: "Test Task",
         description: "A test task",
         status: "pending",
+        category: "TI",
+        priority: "Média",
         createdAt: now,
         updatedAt: now,
       }
@@ -68,10 +75,16 @@ describe("TaskService", () => {
         id: "task-2",
         ...newTaskData,
         status: "pending" as const,
+        category: "TI" as const,
+        priority: "Média" as const,
         createdAt: now,
         updatedAt: now,
       }
 
+      vi.mocked(mockClassifier.classify).mockResolvedValue({
+        category: "TI",
+        priority: "Média",
+      })
       vi.mocked(mockRepository.create).mockResolvedValue(createdTask)
 
       const result = await taskService.createTask(newTaskData)
@@ -80,7 +93,15 @@ describe("TaskService", () => {
       expect(result.title).toBe("New Task")
       expect(result.description).toBe("A brand new task")
       expect(result.status).toBe("pending")
-      expect(mockRepository.create).toHaveBeenCalledWith(newTaskData)
+      expect(mockClassifier.classify).toHaveBeenCalledWith(
+        "New Task",
+        "A brand new task",
+      )
+      expect(mockRepository.create).toHaveBeenCalledWith({
+        ...newTaskData,
+        category: "TI",
+        priority: "Média",
+      })
     })
   })
 })

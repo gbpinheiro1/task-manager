@@ -1,5 +1,6 @@
 import type { NewTask, Task, UpdateTask } from "../models/task.model.js"
 import type { TaskRepository } from "../repositories/task.repository.js"
+import type { GeminiClassifierService } from "./gemini.service.js"
 
 export class TaskNotFoundError extends Error {
   constructor(id: string) {
@@ -9,7 +10,10 @@ export class TaskNotFoundError extends Error {
 }
 
 export class TaskService {
-  constructor(private readonly repository: TaskRepository) {}
+  constructor(
+    private readonly repository: TaskRepository,
+    private readonly classifier: GeminiClassifierService,
+  ) {}
 
   async listTasks(): Promise<Task[]> {
     return this.repository.findAll()
@@ -22,7 +26,11 @@ export class TaskService {
   }
 
   async createTask(data: NewTask): Promise<Task> {
-    return this.repository.create(data)
+    const { category, priority } = await this.classifier.classify(
+      data.title,
+      data.description ?? "",
+    )
+    return this.repository.create({ ...data, category, priority })
   }
 
   async updateTask(id: string, data: UpdateTask): Promise<Task> {

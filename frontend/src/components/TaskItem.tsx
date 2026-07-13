@@ -1,9 +1,15 @@
-import type { Task } from "../types/task"
+import type { Task, TaskPriority } from "../types/task"
 
 interface TaskItemProps {
   task: Task
   onToggleStatus: (id: string) => void
   onDelete: (id: string) => void
+}
+
+const priorityStyles: Record<TaskPriority, string> = {
+  Baixa: "border-yellow-800 bg-yellow-700 text-yellow-50",
+  Média: "border-orange-800 bg-orange-700 text-orange-50",
+  Alta: "border-red-800 bg-red-700 text-red-50",
 }
 
 function TaskItem({ task, onToggleStatus, onDelete }: TaskItemProps) {
@@ -28,6 +34,14 @@ function TaskItem({ task, onToggleStatus, onDelete }: TaskItemProps) {
             }`}
           >
             {isCompleted ? "Concluída" : "Pendente"}
+          </span>
+          <span className="shrink-0 rounded-full border border-gray-800 bg-gray-800 px-2 py-0.5 text-xs lgscreen:text-sm font-medium text-gray-300">
+            {task.category}
+          </span>
+          <span
+            className={`shrink-0 rounded-full border px-2 py-0.5 text-xs lgscreen:text-sm font-medium ${priorityStyles[task.priority]}`}
+          >
+            {task.priority}
           </span>
         </div>
         {task.description && (

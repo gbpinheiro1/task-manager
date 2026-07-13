@@ -4,6 +4,7 @@ import { ZodError } from "zod"
 import { TaskController } from "./controllers/task.controller.js"
 import { DrizzleTaskRepository } from "./repositories/drizzle-task.repository.js"
 import { taskRoutes } from "./routes/task.routes.js"
+import { GeminiClassifierService } from "./services/gemini.service.js"
 import { TaskNotFoundError, TaskService } from "./services/task.service.js"
 
 export async function buildApp() {
@@ -36,7 +37,8 @@ export async function buildApp() {
   })
 
   const taskRepository = new DrizzleTaskRepository()
-  const taskService = new TaskService(taskRepository)
+  const classifier = new GeminiClassifierService()
+  const taskService = new TaskService(taskRepository, classifier)
   const taskController = new TaskController(taskService)
 
   await app.register(taskRoutes(taskController))

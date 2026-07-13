@@ -9,6 +9,7 @@ function getErrorMessage(error: unknown, fallback: string): string {
 export function useTasks() {
   const [tasks, setTasks] = useState<Task[]>([])
   const [isLoading, setIsLoading] = useState(true)
+  const [isCreating, setIsCreating] = useState(false)
   const [error, setError] = useState<string | null>(null)
 
   useEffect(() => {
@@ -32,11 +33,14 @@ export function useTasks() {
   }, [])
 
   async function addTask(title: string, description: string, status: TaskStatus) {
+    setIsCreating(true)
     try {
       const task = await taskApi.createTask({ title, description, status })
       setTasks((prev) => [task, ...prev])
     } catch (err) {
       setError(getErrorMessage(err, "Erro ao criar tarefa"))
+    } finally {
+      setIsCreating(false)
     }
   }
 
@@ -58,5 +62,5 @@ export function useTasks() {
     }
   }
 
-  return { tasks, isLoading, error, addTask, toggleStatus, deleteTask }
+  return { tasks, isLoading, isCreating, error, addTask, toggleStatus, deleteTask }
 }

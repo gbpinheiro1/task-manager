@@ -15,6 +15,13 @@
       "when": 1783632295875,
       "tag": "0001_dry_unus",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1783897725357,
+      "tag": "0002_foamy_vargas",
+      "breakpoints": true
     }
   ]
 }

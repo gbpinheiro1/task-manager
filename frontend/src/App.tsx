@@ -7,7 +7,7 @@ import { useTasks } from "./hooks/useTasks"
 import type { TaskFilterValue } from "./types/task"
 
 function App() {
-  const { tasks, isLoading, error, addTask, toggleStatus, deleteTask } = useTasks()
+  const { tasks, isLoading, isCreating, error, addTask, toggleStatus, deleteTask } = useTasks()
   const [filter, setFilter] = useState<TaskFilterValue>("all")
 
   const filteredTasks = useMemo(() => {
@@ -31,6 +31,7 @@ function App() {
         ) : (
           <TaskList
             tasks={filteredTasks}
+            isCreating={isCreating}
             onToggleStatus={toggleStatus}
             onDelete={deleteTask}
           />
